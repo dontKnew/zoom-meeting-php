@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Zoom WebSDK CDN</title>
+    <title>Zoom Meeting</title>
     <meta charset="utf-8" />
     <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.15.2/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.15.2/css/react-select.css" />
@@ -17,9 +17,10 @@
     <script src="https://source.zoom.us/2.15.2/lib/vendor/redux-thunk.min.js"></script>
     <script src="https://source.zoom.us/2.15.2/lib/vendor/lodash.min.js"></script>
     <script src="https://source.zoom.us/zoom-meeting-2.15.2.min.js"></script>
-    <script src="dk/tool.js"></script>
-    <script src="sdk/vconsole.min.js"></script>
-    <script src="sdk/meeting.js"></script>
+    <script src="js/tool.js"></script>
+    <script src="js/vconsole.min.js"></script>
+    <script src="js/meeting.js"></script>
+
     <script>
 
     </script>

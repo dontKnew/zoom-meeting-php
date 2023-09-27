@@ -1,6 +1,12 @@
 ## Zoom Meeting 
 
 ### Join Zoom Meeting with Meeting SDK
-### CRUD Operation with Zoom Meeting API
+### SERVER TO SERVER Auth
 
-#### more update soon...
+#### Featuers 
+1. Create Meeting
+2. Delete Meeting
+3. Edit Meeting
+4. Join Meeting with two different URL Admin and User
+5. Security - you have to improve this security for this code
+6. Meeting in you website 

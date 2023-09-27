@@ -212,8 +212,6 @@ function getMeeting($meetingId) {
     }
 }
 
-// dd(getMeetingRecordings(85658910254));
-
 function getMeetingRecordings($meetingId) {
     $base_url = 'https://api.zoom.us/v2';
     $meeting_recordings_url = $base_url . '/meetings/' . $meetingId . '/recordings';
@@ -266,181 +264,14 @@ function redirect($url){
     exit;
 }
 
+function getDomain(){
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = $_SERVER['REQUEST_URI'];
 
+    $currentURL = $protocol . $host;
 
-// database operatoin
-function getData($meetingId) {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $sql = "SELECT * FROM tbl_meeting WHERE id = '$meetingId'";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        $data = mysqli_fetch_assoc($result);
-        mysqli_free_result($result);
-        mysqli_close($conn);
-        return $data;
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
-    exit;
-}
-
-function getPateintData($id) {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $sql = "SELECT * FROM tbl_users WHERE id = '$id'";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        $data = mysqli_fetch_assoc($result);
-        mysqli_free_result($result);
-        mysqli_close($conn);
-        
-        return $data;
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
-    exit;
-}
-
-function getPateintAllData() {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $sql = "SELECT * FROM tbl_users";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        mysqli_free_result($result);
-        mysqli_close($conn);
-        return $data;
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
-    exit;
-}
-
-function sendMail($to, $subject, $message){
-
-	$headers = "MIME-Version: 1.0" . "\r\n";
-	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-	// More headers
-	$headers .= 'From: <support@onlineopd.com>' . "\r\n";
-	$headers .= 'Cc: S_rma11@hotmail.com' . "\r\n";
-
-	return mail($to,$subject,$message,$headers);
-}
-
-function getDoctorData($id) {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $sql = "SELECT * FROM tbl_user WHERE id = '$id'";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        $data = mysqli_fetch_assoc($result);
-        mysqli_free_result($result);
-        mysqli_close($conn);
-        return $data;
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
-    exit;
-}
-
-
-
-
-function insertData($postData) {
-    $conn = conn();
-    
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $fields = array();
-    $values = array();
-    
-    $postData['settings'] = json_encode($postData['settings']);
-    
-    foreach ($postData as $key => $value) {
-        $fields[] = $key;
-        $values[] = "'$value'";
-    }
-    $fieldList = implode(', ', $fields);
-    $valueList = implode(', ', $values);
-    $sql = "INSERT INTO tbl_meeting ($fieldList) VALUES ($valueList)";
-    if (mysqli_query($conn, $sql)) {
-        $result =  true;
-    } else {
-        $result =  "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-    mysqli_close($conn);
-    return $result;
-}
-
-function updateData($meetingId, $postData) {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    
-    $assignments = array();
-    $postData['settings'] = json_encode($postData['settings']);
-    foreach ($postData as $key => $value) {
-        $assignments[] = "$key = '$value'";
-    }
-    
-    $assignmentList = implode(', ', $assignments);
-    
-    $sql = "UPDATE tbl_meeting SET $assignmentList WHERE id = $meetingId";
-    
-    if (mysqli_query($conn, $sql)) {
-        $result =  true;
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        $result = false;
-    }
-    mysqli_close($conn);
-    return $result;
-}
-
-
-function deleteData($meetingId) {
-    $conn = conn();
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    
-    $sql = "DELETE FROM tbl_meeting WHERE id = '$meetingId'";
-    
-    if (mysqli_query($conn, $sql)) {
-        $result =  true;
-    } else {
-        $result =  "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-    mysqli_close($conn);
-    return $result;
-}
-
-
-
-
-function conn(){
-    return mysqli_connect(DATABASE_SERVER, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
+    return $currentURL;
 }
 
 
